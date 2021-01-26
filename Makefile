@@ -17,7 +17,6 @@ clean:
 	@rm -Rf output
 
 $(VENV):
-	source $(VENV)/bin/activate
 	python3 -m venv $(VENV)
 
 $(json-schema-to-class-bin): $(VENV)
