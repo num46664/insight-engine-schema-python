@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import typing
 
+from typing import List
 from pydantic import Field, root_validator
 from pydantic.error_wrappers import ErrorWrapper, ValidationError
 from pydantic.errors import MissingError, NoneIsNotAllowedError
@@ -80,8 +81,8 @@ class InsightEngineRequest(domainresource.DomainResource):
         # if property is element of this resource.
         element_property=True,
     )
-    history: List[HistoryClaim] = Field(list(), alias="history", element_property=True)
-	referenceData: List[str] = Field(list())
+    history: List[HistoryClaim] = Field([], alias="history", element_property=True)
+    referenceData: List[str] = Field([])
 
     transaction_id: str = Field(
         None,
