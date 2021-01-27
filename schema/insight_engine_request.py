@@ -30,7 +30,7 @@ class InsightEngineRequest(domainresource.DomainResource):
         element_property=True,
     )
     
-    transaction_id: string = Field(
+    transaction_id: str = Field(
         None,
         alias="transactionId",
         title="Transaction identifier",
