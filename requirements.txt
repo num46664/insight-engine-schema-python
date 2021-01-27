@@ -1,4 +1,4 @@
-pytest >= 6.1.2
-mypy >= 0.790
+pytest >= 6.2.2
+mypy >= 0.800
 pytest-mypy >= 0.8.0
-fhir.resources == 5.1.1 # 6.0.0b11
+fhir.resources == 6.0.0

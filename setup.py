@@ -7,9 +7,9 @@ with open("README.md", "r") as fh:
 
 setup(
     name="insight-engine-schema-python",
-    version="0.7.0",
+    version="0.8.0",
     author="rialtic-runtime",
-    author_email="arseniy.zhizhelev@adaptive.team",
+    author_email="arseniy.zhizhelev@rialtic.io",
     description="Rialtic Insight Engine Python schema",
     long_description=long_description,
     url="https://github.com/rialtic-runtime/insight-engine-schema-python",
@@ -20,9 +20,9 @@ setup(
         "Operating System :: OS Independent",
     ],
     requires=[\
-        "pytest         (>= 6.1.2)",
-        "mypy           (>= 0.790)",
+        "pytest         (>= 6.2.2)",
+        "mypy           (>= 0.800)",
         # "pytest-mypy    (>= 0.8.0)",
-        "fhir.resources (== 5.1.1)", # 6.0.0b11
+        "fhir.resources (== 6.0.0)",
     ]
 )

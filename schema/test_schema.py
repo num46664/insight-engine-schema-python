@@ -16,7 +16,7 @@ def test_Address():
 def test_claim1():
     with open("schema/claim1.json") as claim1file:
         claim1json = json.load(claim1file)
-        claim1 = Claim(claim1json, strict=False)
+        claim1 = Claim(**claim1json)
         assert claim1.id == "claim1234"
         assert claim1.type.id == "something"
         items = cast(List[ClaimItem], claim1.item)
@@ -32,10 +32,11 @@ def test_json_str():
                  "name": "Acme Corporation",
                  "address": [{"country": "Swizterland"}]
                  }
-    org = Organization(json_dict)
+    org = Organization(**json_dict)
     assert isinstance(org.address[0], Address)
     assert org.address[0].country == "Swizterland"
-    assert org.as_json()['active'] is True
+    js = org.json()
+    assert json.loads(js)['active'] is True
 
 
 def test_response():
@@ -47,14 +48,11 @@ def test_response():
             }
         ]
     }
-    response = InsightEngineResponse(json_dict)
+    response = InsightEngineResponse(**json_dict)
     assert len(response.insights) == 1
 
 def test_file_deserialization():
-    with open('schema/InsightEngineResponse.json', 'r') as file:
-        response_json = json.load(file)
-        print(response_json)
-        response = InsightEngineResponse(response_json, strict = False)
-        insight: Insight = response.insights[0]
-        assert insight.description == "No"
-        assert insight.type == InsightType.NotApplicable
+    response = InsightEngineResponse.parse_file('schema/InsightEngineResponse.json')
+    insight: Insight = response.insights[0]
+    assert insight.description == "No"
+    assert insight.type == InsightType.NotApplicable
