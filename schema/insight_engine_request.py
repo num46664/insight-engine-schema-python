@@ -10,6 +10,57 @@ from fhir.resources import backboneelement, domainresource, fhirtypes
 from fhir.resources.claim import Claim
 
 
+class HistoryClaim(domainresource.DomainResource):
+    """ HistoryClaim contains additional information apart from just the claim.
+    """
+
+    resource_type = Field("HistoryClaim", const=True)
+
+    claim: Claim = Field(
+        None,
+        alias="claim",
+        title="Old Claim",
+        description="Claim itself as it was supplied",
+        element_property=True,
+    )
+
+    transaction_id: str = Field(
+        None,
+        alias="transactionId",
+        title="Old transaction identifier",
+        description="ID of transaction when we received the claim",
+        element_property=True,
+    )
+
+    client_id: str = Field(
+        None,
+        alias="clientId",
+        title="client identifier",
+        element_property=True,
+    )
+
+    member_id: str = Field(
+        None,
+        alias="memberId",
+        title="member identifier",
+        element_property=True,
+    )
+
+    created_at: str = Field(
+        None,
+        alias="createdAt",
+        title="createdAt",
+        element_property=True,
+    )
+
+    context: str = Field(
+        None,
+        alias="context",
+        title="context",
+        element_property=True,
+    )
+
+
 class InsightEngineRequest(domainresource.DomainResource):
     """ Insight Engine request.
 
@@ -29,7 +80,9 @@ class InsightEngineRequest(domainresource.DomainResource):
         # if property is element of this resource.
         element_property=True,
     )
-    
+    history: List[HistoryClaim] = Field(list(), alias="history", element_property=True)
+	referenceData: List[str] = Field(list())
+
     transaction_id: str = Field(
         None,
         alias="transactionId",
