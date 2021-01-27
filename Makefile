@@ -2,7 +2,7 @@ SHELL := /bin/bash
 
 CURDIR = $(shell pwd)
 
-VENV = $(CURDIR)/../.venv
+VENV = $(CURDIR)/.venv
 
 json-schema-to-class-bin = $(VENV)/bin/json-schema-to-class
 pytest-bin = $(VENV)/bin/pytest
@@ -67,14 +67,12 @@ update-schema: update-schema-pythonBeans
 schema/insight_engine_schema.py: 
 	$(MAKE) update-schema-pythonBeans
 
-test: # schema/insight_engine_schema.py #python-requirements
+test:
 	source $(VENV)/bin/activate
 	pytest schema/test_schema.py
 
 install-requirements:
 	source $(VENV)/bin/activate
-	pip install fhir.resources
+	pip install -r requirements.txt
 
 all: test
-
-
