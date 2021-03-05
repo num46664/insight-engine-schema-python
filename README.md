@@ -6,11 +6,11 @@ It uses `fhir.resources` internally (see https://pypi.org/project/fhir.resources
 One may add this schema as a dependency like this:
 
 ```
-pip install git+ssh://git@github.com:/rialtic-runtime/insight-engine-schema-python.git#egg=insight_engine_schema_python
+pip install git+ssh://git@github.com:/rialtic-community/insight-engine-schema-python.git#egg=insight_engine_schema_python
 ```
 
 or add the following line to `requirements.txt`:
 
 ```
-git+ssh://git@github.com:/rialtic-runtime/insight-engine-schema-python.git#egg=insight_engine_schema_python >= 0.7.0
+git+ssh://git@github.com:/rialtic-community/insight-engine-schema-python.git#egg=insight_engine_schema_python >= 0.7.0
 ```
