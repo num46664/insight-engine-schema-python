@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="insight-engine-schema-python",
-    version="0.8.4",
+    version="0.8.5",
     author="rialtic-runtime",
     author_email="arseniy.zhizhelev@rialtic.io",
     description="Rialtic Insight Engine Python schema",
