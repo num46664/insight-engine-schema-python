@@ -19,6 +19,7 @@ class InsightType(str, Enum):
 	NotApplicable       = "Not Applicable"
 	ClaimLineValid      = "Claim Line Valid"
 	ClaimNotPayable     = "Claim Not Payable"
+    ClaimPartialPayable = "Claim Partially Payable"
 	ClaimLineNotPayable = "Claim Line Not Payable"
 	RecodeClaimLine     = "Recode Claim Line"
 	AdjustPayment       = "Adjust Payment"
