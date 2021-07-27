@@ -81,8 +81,6 @@ class InsightEngineRequest(domainresource.DomainResource):
         # if property is element of this resource.
         element_property=True,
     )
-    history: List[HistoryClaim] = Field([], alias="history", element_property=True)
-    referenceData: List[str] = Field([])
 
     transaction_id: str = Field(
         None,
@@ -95,4 +93,3 @@ class InsightEngineRequest(domainresource.DomainResource):
         # if property is element of this resource.
         element_property=True,
     )
-
