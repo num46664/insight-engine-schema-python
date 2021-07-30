@@ -133,3 +133,6 @@ dmypy.json
 
 # rialtic api key
 **/.apikey
+
+# Mac files
+.DS_Store
