@@ -7,11 +7,10 @@ from fhir.resources.address import Address
 from fhir.resources.organization import Organization
 from schema.insight_engine_response import InsightEngineResponse, Insight, InsightType
 
-
-def test_address():
-    myaddr = Address()
-    myaddr.city = 'City'
-    assert myaddr.city == "City"
+def test_Address():
+    myAddr = Address()
+    myAddr.city = 'City'
+    assert myAddr.city == "City"
 
 
 def test_claim1():
@@ -31,11 +30,11 @@ def test_json_str():
                  "id": "mmanu",
                  "active": True,
                  "name": "Acme Corporation",
-                 "address": [{"country": "Switzerland"}]
+                 "address": [{"country": "Swizterland"}]
                  }
     org = Organization(**json_dict)
     assert isinstance(org.address[0], Address)
-    assert org.address[0].country == "Switzerland"
+    assert org.address[0].country == "Swizterland"
     js = org.json()
     assert json.loads(js)['active'] is True
 
@@ -51,7 +50,6 @@ def test_response():
     }
     response = InsightEngineResponse(**json_dict)
     assert len(response.insights) == 1
-
 
 def test_file_deserialization():
     response = InsightEngineResponse.parse_file('schema/InsightEngineResponse.json')

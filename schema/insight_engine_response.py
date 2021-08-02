@@ -101,6 +101,7 @@ class Defense(domainresource.DomainResource):
     )
     referenceData: List[str] = Field("referenceData")
 
+    
 
 class Insight(domainresource.DomainResource):
     """Insight is the result of running an insight engine on a claim.
@@ -110,14 +111,14 @@ class Insight(domainresource.DomainResource):
 
     resource_type = Field("Insight", const=True)
 
-    id: str = Field(None, alias="id")
+    id: str = Field(None, alias = "id")
     type: InsightType = Field(InsightType.Error, alias="type", description="Insight type is used in recommendation engine to order all available insights")
     description: str = Field(None, alias="description")
     defense: Defense = Field(None, alias="defense")
-    action: str = Field(None, alias="action", description="Action is a formal string in Java Script that describes the intended change")
+    action: str = Field(None, alias = "action", description=("Action is a formal string in Java Script that describes the intended change"))
     type = InsightType.Error
-    claim_line_sequence_num: int = Field(0, alias="claimLineSequenceNum", description="If the insight is for claim line, then this property is sequence num of the respective line")
-    error_code: int = Field(0, alias="errorCode", description="If insight type is Error, this property contains error code that is to be reported to engine developer")
+    claim_line_sequence_num: int = Field(0, alias = "claimLineSequenceNum", description="If the insight is for claim line, then this property is sequence num of the respective line")
+    error_code: int = Field(0, alias = "errorCode", description="If insight type is Error, this property contains error code that is to be reported to engine developer")
 
 
 class InsightEngineResponse(domainresource.DomainResource):
@@ -139,3 +140,5 @@ class InsightEngineResponse(domainresource.DomainResource):
         # if property is element of this resource.
         element_property=True,
     )
+
+
