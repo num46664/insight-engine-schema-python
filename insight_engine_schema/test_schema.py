@@ -14,7 +14,7 @@ def test_Address():
 
 
 def test_claim1():
-    with open("schema/claim1.json") as claim1file:
+    with open("insight_engine_schema/claim1.json") as claim1file:
         claim1json = json.load(claim1file)
         claim1 = Claim(**claim1json)
         assert claim1.id == "claim1234"
@@ -52,7 +52,7 @@ def test_response():
     assert len(response.insights) == 1
 
 def test_file_deserialization():
-    response = InsightEngineResponse.parse_file('schema/InsightEngineResponse.json')
+    response = InsightEngineResponse.parse_file('insight_engine_schema/InsightEngineResponse.json')
     insight: Insight = response.insights[0]
     assert insight.description == "No"
     assert insight.type == InsightType.NotApplicable
