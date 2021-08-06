@@ -5,7 +5,7 @@ from fhir.resources.claim import Claim
 from fhir.resources.claim import ClaimItem
 from fhir.resources.address import Address
 from fhir.resources.organization import Organization
-from schema.insight_engine_response import InsightEngineResponse, Insight, InsightType
+from insight_engine_schema.insight_engine_response import InsightEngineResponse, Insight, InsightType
 
 def test_Address():
     myAddr = Address()
