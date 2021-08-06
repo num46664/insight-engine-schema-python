@@ -1,8 +1,5 @@
 SHELL := /bin/bash
 
-CURDIR = $(shell pwd)
-POETRY := $(shell command -v poetry 2> /dev/null)
-
 .PHONY: install
 install:
 	poetry install
