@@ -48,6 +48,7 @@ tag: release-gatekeep
 .PHONY: do-release
 do-release: tag
 #	checkout most recent tag
+	@git config advice.detachedHead false
 	@git checkout $$(git describe --tags `git rev-list --tags --max-count=1`)
 	@$(MAKE) -C  .  finish-release
 
@@ -57,10 +58,11 @@ final-build: package
 
 .PHONY: finish-release
 finish-release: final-build
+	poetry publish --dry-run
 
 .PHONY: release
 release: build-fresh
-	poetry publish --dry-run
+
 # </Release>
 
 .PHONY: clean
