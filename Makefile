@@ -32,8 +32,7 @@ build-fresh: build-in-place
 #	remove temp dir if exists
 	@rm -rf $(TEMP_DIR)
 #	clone repo into temp dir
-	git clone $(REMOTE_GIT_URL) $(TEMP_DIR)
-	git checkout master
+	git clone $(REMOTE_GIT_URL) $(TEMP_DIR) --branch master
 #	move into temp dir
 	@$(MAKE) -C $(TEMP_DIR)/$(REPO_NAME) do-release
 
