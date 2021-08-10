@@ -1,7 +1,7 @@
 [tool]
 [tool.poetry]
-name = "insight_engine_schema"
-version = "0.1.3"
+name = "insight-engine-schema"
+version = "0.1.4"
 description = "Rialtic insight engine schema in Python"
 authors = ["Rialtic <engines.data@rialtic.io>"]
 
@@ -10,20 +10,17 @@ authors = ["Rialtic <engines.data@rialtic.io>"]
 readme = "README.md"
 homepage = "https://rialtic.io"
 repository = "https://github.com/rialtic-community/insight-engine-schema-python"
-#todo: pick keywords
+# todo: pick keywords
 keywords = ["rialtic", "insight", "engines", "schema"]
 # todo: pick classifiers
 classifiers = [
     "Environment :: Console",
-    "Framework :: Flake8",
     "Operating System :: OS Independent",
-    "Topic :: Software Development :: Documentation",
     "Topic :: Software Development :: Libraries :: Python Modules",
-    "Topic :: Software Development :: Quality Assurance",
 ]
-# include = [
-#     "LICENSE",
-# ]
+packages = [
+    { include = "schema" }
+]
 
 [tool.poetry.dependencies]
 python = "3.7.*"
@@ -37,4 +34,4 @@ pytest-mypy = ">= 0.8.0"
 
 [build-system]
 requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+build-backend = "poetry.core.masonry.api"
