@@ -25,12 +25,7 @@ package: install test
 # <Release>
 .PHONY: build-in-place
 build-in-place: package
-	@./check-for-untracked.sh && echo 'No untracked files... check!'
-
-
-.PHONY: dep-check
-dep-check: build-in-place
-	echo 'SUCESS!!!'
+	./check-for-untracked.sh
 
 .PHONY: build-fresh
 build-fresh: build-in-place
