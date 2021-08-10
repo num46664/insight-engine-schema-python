@@ -131,8 +131,11 @@ dmypy.json
 # IntelliJ
 .idea/
 
-# rialtic api key
-**/.apikey
-
 # Mac files
 .DS_Store
+
+# RIALTIC api key
+**/.apikey
+
+# RIALTIC Temp files
+.tmp/
