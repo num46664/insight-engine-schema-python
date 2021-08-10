@@ -5,7 +5,7 @@ from fhir.resources.claim import Claim
 from fhir.resources.claim import ClaimItem
 from fhir.resources.address import Address
 from fhir.resources.organization import Organization
-from insight_engine_schema.insight_engine_response import InsightEngineResponse, Insight, InsightType
+from schema.insight_engine_response import InsightEngineResponse, Insight, InsightType
 
 def test_Address():
     myAddr = Address()
@@ -14,7 +14,7 @@ def test_Address():
 
 
 def test_claim1():
-    with open("insight_engine_schema/claim1.json") as claim1file:
+    with open("schema/claim1.json") as claim1file:
         claim1json = json.load(claim1file)
         claim1 = Claim(**claim1json)
         assert claim1.id == "claim1234"
@@ -52,7 +52,7 @@ def test_response():
     assert len(response.insights) == 1
 
 def test_file_deserialization():
-    response = InsightEngineResponse.parse_file('insight_engine_schema/InsightEngineResponse.json')
+    response = InsightEngineResponse.parse_file('schema/InsightEngineResponse.json')
     insight: Insight = response.insights[0]
     assert insight.description == "No"
     assert insight.type == InsightType.NotApplicable
