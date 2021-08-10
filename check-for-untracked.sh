@@ -1,6 +1,6 @@
 #!/bin/bash
 
-UNTRACKED=$(git status --porcelain=v1 | grep '??')
+UNTRACKED=$(git status --porcelain=v1)
 echo 'TEST'
 echo $UNTRACKED
 if [[ "$UNTRACKED" == "" ]]

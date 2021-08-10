@@ -30,7 +30,7 @@ build-in-place: package
 
 .PHONY: dep-check
 dep-check: build-in-place
-	echo ''
+	echo 'SUCESS!!!'
 
 .PHONY: build-fresh
 build-fresh: build-in-place
