@@ -48,7 +48,7 @@ tag: release-gatekeep
 .PHONY: do-release
 do-release: tag
 #	checkout most recent tag
-	git checkout $(git describe --tags `git rev-list --tags --max-count=1`)
+	@git checkout $$(git describe --tags `git rev-list --tags --max-count=1`)
 	@$(MAKE) -C  .  finish-release
 
 
