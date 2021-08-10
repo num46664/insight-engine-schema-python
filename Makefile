@@ -7,14 +7,17 @@ OUTPUT_DIR = dist
 # <Build>
 .PHONY: install
 install:
+#	install dependencies
 	poetry install
 
 .PHONY: test
 test: install
+#	run tests
 	poetry run pytest tests
 
 .PHONY: package
 package: install test
+#	delete output dir if exists
 	@[ -d $(OUTPUT_DIR) ] && rm -r $(OUTPUT_DIR)
 	poetry build
 # </Build>
@@ -26,9 +29,12 @@ build-in-place: package
 
 .PHONY: build-fresh
 build-fresh: build-in-place
+#	remove temp dir if exists
 	@rm -rf $(TEMP_DIR)
+#	clone repo into temp dir
 	git clone $(REMOTE_GIT_URL) $(TEMP_DIR)
-	git clone $(REMOTE_GIT_URL) $(TEMP_DIR)
+	git checkout master
+#	move into temp dir
 	@$(MAKE) -C $(TEMP_DIR)/$(REPO_NAME) do-release
 
 .PHONY: release-gatekeep
