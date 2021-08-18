@@ -76,7 +76,7 @@ final-build: package
 .PHONY: publish
 publish: final-build
 	poetry config repositories.testpypi https://test.pypi.org/legacy/
-	if [ $${RIALTIC_RELEASE_WET_RUN} -eq 1 ]; then \
+	if [ "${RIALTIC_RELEASE_WET_RUN}" -eq 1 ]; then \
   		git remote add upstream $(REMOTE_GIT_URL) \
 	    && $(PUBLISH_CMD) \
 	    && git push tags \
