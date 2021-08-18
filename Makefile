@@ -4,16 +4,16 @@ REPO_NAME = 'insight-engine-schema-python'
 OUTPUT_DIR = dist
 BRANCH = poetry
 
-ifeq (${RIALTIC_RELEASE_LOCAL}, 1)
-REMOTE_GIT_URL = 'git@github.com:rialtic-community/insight-engine-schema-python.git'
-else
+ifeq (${RIALTIC_RELEASE_NONLOCAL}, 1)
 REMOTE_GIT_URL = "https://${RIALTIC_LIBS_PAT}@github.com/rialtic-community/insight-engine-schema-python.git"
+else
+REMOTE_GIT_URL = 'git@github.com:rialtic-community/insight-engine-schema-python.git'
 endif
 
 ifeq (${RIALTIC_RELEASE_PYPI}, 1)
-PUBLISH_CMD = 'poetry publish'
+PUBLISH_CMD = poetry publish
 else
-PUBLISH_CMD = 'poetry publish -r testpypi'
+PUBLISH_CMD = poetry publish -r testpypi
 endif
 
 
