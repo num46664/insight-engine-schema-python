@@ -1,8 +1,9 @@
 SHELL := /bin/bash
-REMOTE_GIT_URL = 'https://github.com/rialtic-community/insight-engine-schema-python.git'
+REMOTE_GIT_URL = "https://${RIALTIC_LIBS_PAT}@github.com/rialtic-community/insight-engine-schema-python.git"
 TEMP_DIR = .tmp
 REPO_NAME = 'insight-engine-schema-python'
 OUTPUT_DIR = dist
+BRANCH = poetry
 
 # <Build>
 .PHONY: install
@@ -18,7 +19,7 @@ test: install
 .PHONY: package
 package: install test
 #	delete output dir if exists
-	@[ -d $(OUTPUT_DIR) ] && rm -r $(OUTPUT_DIR)
+	rm -rf $(OUTPUT_DIR)
 	poetry build
 # </Build>
 
@@ -30,18 +31,20 @@ build-in-place: package
 .PHONY: build-fresh
 build-fresh: build-in-place
 #	remove temp dir if exists
-	@rm -rf $(TEMP_DIR)
+	rm -rf $(TEMP_DIR)
 #	clone repo into temp dir
-	git clone $(REMOTE_GIT_URL) $(TEMP_DIR) --branch master
+	git clone $(REMOTE_GIT_URL) $(TEMP_DIR) --branch $(BRANCH)
 #	move into temp dir
-	@$(MAKE) -C $(TEMP_DIR)/$(REPO_NAME) do-release
+	$(MAKE) -C $(TEMP_DIR) do-release
 
 .PHONY: release-gatekeep
 release-gatekeep: package
+	@echo "-> Release Gatekeeping"
 	./check-for-untracked.sh
 
 .PHONY: tag
 tag: release-gatekeep
+	@echo "-> Tag"
 	./tag_and_bump.sh
 
 .PHONY: do-release
