@@ -8,9 +8,7 @@ install with `pip install insight-engine-schema`
 # Release Instructions
 ### Prerequisites:
 The release must be done in an environment matching the following criteria:
-- `make` is available (the `Makefile` attempts to be compatible with the POSIX standard `make`, 
-   however it has mostly been tested with GNU `make`)
-  - `make` should be using either `sh` or `bash` (tested more extensively with `bash`)
+- GNU `make` is available
 - `poetry` is available
 - `python` is available, matching the version specified in `pyproject.toml`
 - `git` is available
