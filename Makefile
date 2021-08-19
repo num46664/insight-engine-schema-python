@@ -12,8 +12,10 @@ endif
 
 ifeq (${RIALTIC_RELEASE_PYPI}, 1)
 PUBLISH_CMD = poetry publish
+TOKEN = "${RIALTIC_PYPI_TOKEN}"
 else
 PUBLISH_CMD = poetry publish -r testpypi
+TOKEN = "${RIALTIC_PYPI_TOKEN_TEST}"
 endif
 
 
@@ -78,7 +80,7 @@ publish: final-build
 	poetry config repositories.testpypi https://test.pypi.org/legacy/
 	if [ "${RIALTIC_RELEASE_WET_RUN}" = 1 ]; then \
   		git remote add upstream $(REMOTE_GIT_URL) \
-	    && $(PUBLISH_CMD) \
+	    && $(PUBLISH_CMD) --username __token__ --password $(TOKEN) \
 	    && git push tags \
 	    && git checkout $(BRANCH) \
 	    && git push upstream $(BRANCH); \
