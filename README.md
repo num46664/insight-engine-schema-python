@@ -6,7 +6,16 @@ It uses `fhir.resources` internally (see https://pypi.org/project/fhir.resources
 install with `pip install insight-engine-schema`
 
 # Release Instructions
+### Prerequisites:
+The release must be done in an environment matching the following criteria:
+- `make` is available (the `Makefile` attempts to be compatible with the POSIX standard `make`, 
+   however it has mostly been tested with GNU `make`)
+  - `make` should be using either `sh` or `bash` (tested more extensively with `bash`)
+- `poetry` is available
+- `python` is available, matching the version specified in `pyproject.toml`
+- `git` is available
 
+### Doing the release
 To do the release from any repo using the common `Makefile` is as simple as running `make release`.
 
 The default behaviour of `make release` will be a dry-run that does not publish any package.
