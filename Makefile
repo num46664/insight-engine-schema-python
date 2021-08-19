@@ -82,7 +82,7 @@ publish: final-build
   		git remote add upstream $(REMOTE_GIT_URL) \
 	    && $(PUBLISH_CMD) --username __token__ --password $(TOKEN) \
 	    && git checkout $(BRANCH) \
-	    && git push tags \
+	    && git push upstream $$(git describe --tags `git rev-list --tags --max-count=1`) \
 	    && git push upstream $(BRANCH); \
     else \
 		$(PUBLISH_CMD) --dry-run; \
