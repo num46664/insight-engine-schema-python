@@ -1,78 +1,97 @@
 SHELL := /bin/bash
+TEMP_DIR = .tmp
+REPO_NAME = 'insight-engine-schema-python'
+OUTPUT_DIR = dist
+BRANCH = master
 
-CURDIR = $(shell pwd)
+ifeq (${RIALTIC_RELEASE_NONLOCAL}, 1)
+REMOTE_GIT_URL = "https://${RIALTIC_LIBS_PAT}@github.com/rialtic-community/insight-engine-schema-python.git"
+else
+REMOTE_GIT_URL = 'git@github.com:rialtic-community/insight-engine-schema-python.git'
+endif
 
-VENV = $(CURDIR)/.venv
+ifeq (${RIALTIC_RELEASE_PYPI}, 1)
+PUBLISH_CMD = poetry publish
+TOKEN = "${RIALTIC_PYPI_TOKEN}"
+else
+PUBLISH_CMD = poetry publish -r testpypi
+TOKEN = "${RIALTIC_PYPI_TOKEN_TEST}"
+endif
 
-json-schema-to-class-bin = $(VENV)/bin/json-schema-to-class
-pytest-bin = $(VENV)/bin/pytest
 
-.DEFAULT_GOAL := all
+# <Build>
+.PHONY: install
+install:
+#	install dependencies
+	poetry install
 
-.ONESHELL:
+.PHONY: test
+test: install
+#	run tests
+	poetry run pytest tests
 
-.PHONY: clean python-requirements update-schema-pythonBeans
+.PHONY: package
+package: install test
+#	delete output dir if exists
+	@rm -rf $(OUTPUT_DIR)
+	poetry build
+# </Build>
 
+# <Release>
+.PHONY: build-in-place
+build-in-place: package
+	@echo "-> Build In Place"
+	@./check-for-untracked.sh
+
+.PHONY: build-fresh
+build-fresh: build-in-place
+	@echo "-> Build Fresh"
+#	remove temp dir if exists
+	rm -rf $(TEMP_DIR)
+#	clone repo into temp dir
+	git clone $(REMOTE_GIT_URL) $(TEMP_DIR) --branch $(BRANCH)
+#	move into temp dir
+	$(MAKE) -C $(TEMP_DIR) do-release
+
+.PHONY: release-gatekeep
+release-gatekeep: package
+	./check-for-untracked.sh
+
+.PHONY: tag
+tag: release-gatekeep
+	@echo "-> Tag"
+	@./tag_and_bump.sh
+
+.PHONY: do-release
+do-release: tag
+	@echo "-> Do Release"
+#	checkout most recent tag
+	@git config advice.detachedHead false
+	@git checkout $$(git describe --tags `git rev-list --tags --max-count=1`)
+	@$(MAKE) -C  .  publish
+
+
+.PHONY: final-build
+final-build: package
+
+.PHONY: publish
+publish: final-build
+	@poetry config repositories.testpypi https://test.pypi.org/legacy/
+	@if [ "${RIALTIC_RELEASE_WET_RUN}" = 1 ]; then \
+  		git remote add upstream $(REMOTE_GIT_URL) \
+	    && $(PUBLISH_CMD) --username __token__ --password $(TOKEN) \
+	    && git checkout $(BRANCH) \
+	    && git push upstream $$(git describe --tags `git rev-list --tags --max-count=1`) \
+	    && git push upstream $(BRANCH); \
+    else \
+		$(PUBLISH_CMD) --username __token__ --password $(TOKEN) --dry-run; \
+	fi
+.PHONY: release
+release: build-fresh
+
+# </Release>
+
+.PHONY: clean
 clean:
-	@rm -Rf output
-
-$(VENV):
-	python3 -m venv $(VENV)
-
-$(json-schema-to-class-bin): $(VENV)
-	source $(VENV)/bin/activate
-	pip install json-schema-to-class
-
-$(pytest-bin): $(VENV)
-	source $(VENV)/bin/activate
-	pip install pytest
-
-python-requirements: $(VENV)
-	source $(VENV)/bin/activate
-	pip install -r requirements.txt
-
-# json-schema-to-class works. It produces a slightly different schema
-# It also requires some minor changes to the schema itself.
-# Currently yacg is being used, because it works without schema modification.
-update-schema-using-json-schema-to-class: $(json-schema-to-class-bin)
-	source $(VENV)/bin/activate
-	json-schema-to-class ../insight-engine-schema-python/request.json --indent 2 -o request.py
-	json-schema-to-class ../insight-engine-schema-python/response.json --indent 2 -o response.py
-
-update-schema-old:
-	@docker pull okieoth/yacg:0.2.1
-	@mkdir resources
-	@cp ../insight-engine-schema-python/request.json resources/request.json
-	@cp ../insight-engine-schema-python/response.json resources/response.json
-	@docker run -v `pwd`/resources:/resources --rm -t okieoth/yacg:0.2.1 \
-	    --models /resources/request.json  \
-                     /resources/response.json \
-	    --singleFileTemplates plantUml=stdout
-
-
-update-schema-pythonBeans: ../insight-engine-schema-python
-	@docker pull okieoth/yacg:0.2.1
-	@mkdir -p schema
-	@cp ../insight-engine-schema-python/request.json schema/request.json
-	@cp ../insight-engine-schema-python/response.json schema/response.json
-	@docker run -v `pwd`:/workspace --rm -t okieoth/yacg:0.2.1 \
-	    --models /workspace/schema/request.json  \
-	             /workspace/schema/response.json \
-	    --singleFileTemplates pythonBeans=/workspace/schema/insight_engine_schema.py
-	@rm schema/request.json
-	@rm schema/response.json
-
-update-schema: update-schema-pythonBeans
-
-schema/insight_engine_schema.py: 
-	$(MAKE) update-schema-pythonBeans
-
-test:
-	source $(VENV)/bin/activate
-	pytest schema/test_schema.py
-
-install-requirements:
-	source $(VENV)/bin/activate
-	pip install -r requirements.txt
-
-all: test
+	@rm -r $(OUTPUT_DIR)
+	@rm -rf $(TEMP_DIR)
