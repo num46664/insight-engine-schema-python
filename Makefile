@@ -2,7 +2,7 @@ SHELL := /bin/bash
 TEMP_DIR = .tmp
 REPO_NAME = 'insight-engine-schema-python'
 OUTPUT_DIR = dist
-BRANCH = poetry
+BRANCH = master
 
 ifeq (${RIALTIC_RELEASE_NONLOCAL}, 1)
 REMOTE_GIT_URL = "https://${RIALTIC_LIBS_PAT}@github.com/rialtic-community/insight-engine-schema-python.git"
