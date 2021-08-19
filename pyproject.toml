@@ -1,7 +1,7 @@
 [tool]
 [tool.poetry]
 name = "insight-engine-schema"
-version = "0.1.4"
+version = "0.1.5"
 description = "Rialtic insight engine schema in Python"
 authors = ["Rialtic <engines.data@rialtic.io>"]
 
