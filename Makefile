@@ -55,7 +55,6 @@ build-fresh: build-in-place
 
 .PHONY: release-gatekeep
 release-gatekeep: package
-	@echo "-> Release Gatekeeping"
 	./check-for-untracked.sh
 
 .PHONY: tag
