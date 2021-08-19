@@ -85,7 +85,7 @@ publish: final-build
 	    && git push upstream $$(git describe --tags `git rev-list --tags --max-count=1`) \
 	    && git push upstream $(BRANCH); \
     else \
-		$(PUBLISH_CMD) --dry-run; \
+		$(PUBLISH_CMD) --username __token__ --password $(TOKEN) --dry-run; \
 	fi
 .PHONY: release
 release: build-fresh
