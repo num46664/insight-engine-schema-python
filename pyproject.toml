@@ -5,14 +5,11 @@ version = "0.1.9"
 description = "Rialtic insight engine schema in Python"
 authors = ["Rialtic <engines.data@rialtic.io>"]
 
-# todo: pick license
-# license = ""
+license = "Apache-2.0"
 readme = "README.md"
 homepage = "https://rialtic.io"
 repository = "https://github.com/rialtic-community/insight-engine-schema-python"
-# todo: pick keywords
 keywords = ["rialtic", "insight", "engines", "schema"]
-# todo: pick classifiers
 classifiers = [
     "Environment :: Console",
     "Operating System :: OS Independent",
